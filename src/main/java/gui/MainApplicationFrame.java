@@ -43,10 +43,10 @@ public class MainApplicationFrame extends JFrame
         setContentPane(desktopPane);
 
 
-        LogWindow logWindow = createLogWindow();
+        LogWindow logWindow = new LogWindow(Logger.getDefaultLogSource()).createLogWindow();
         addWindow(logWindow);
 
-        GameWindow gameWindow = new GameWindow();
+        GameWindow gameWindow = new GameWindow().CreateGameWindow();
         gameWindow.setSize(WINDOW_WIDTH,  WINDOW_HEIGHT);
         addWindow(gameWindow);
 

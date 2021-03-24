@@ -6,10 +6,15 @@ import java.awt.TextArea;
 
 import javax.swing.JInternalFrame;
 import javax.swing.JPanel;
+import javax.swing.event.InternalFrameAdapter;
+import javax.swing.event.InternalFrameEvent;
 
 import log.LogChangeListener;
 import log.LogEntry;
 import log.LogWindowSource;
+import log.Logger;
+
+import static gui.ClosingPanel.closingPanelLogic;
 
 public class LogWindow extends JInternalFrame implements LogChangeListener
 {
@@ -40,6 +45,33 @@ public class LogWindow extends JInternalFrame implements LogChangeListener
         }
         m_logContent.setText(content.toString());
         m_logContent.invalidate();
+    }
+
+    public LogWindowSource getLogWindowSource() {
+        return m_logSource;
+    }
+
+    private void unregisterListener() {
+        m_logSource.unregisterListener(this);
+    }
+
+    protected LogWindow createLogWindow() {
+
+        this.setLocation(10, 10);
+        this.setSize(300, 800);
+        setMinimumSize(this.getSize());
+        this.addInternalFrameListener(new InternalFrameAdapter() {
+            @Override
+            public void internalFrameClosing(InternalFrameEvent event) {
+                super.internalFrameClosing(event);
+                closingPanelLogic(event);
+                unregisterListener();
+
+            }
+        });
+        this.pack();
+        Logger.debug("Протокол работает");
+        return this;
     }
     
     @Override

@@ -1,9 +1,15 @@
 package gui;
 
+import RobotEngine.Mover;
+
 import java.awt.BorderLayout;
 
 import javax.swing.JInternalFrame;
 import javax.swing.JPanel;
+import javax.swing.event.InternalFrameAdapter;
+import javax.swing.event.InternalFrameEvent;
+
+import static gui.ClosingPanel.closingPanelLogic;
 
 public class GameWindow extends JInternalFrame
 {
@@ -16,5 +22,18 @@ public class GameWindow extends JInternalFrame
         panel.add(m_visualizer, BorderLayout.CENTER);
         getContentPane().add(panel);
         pack();
+    }
+
+    protected GameWindow CreateGameWindow(){
+        this.setLocation(50,50);
+        this.addInternalFrameListener(new InternalFrameAdapter() {
+            @Override
+            public void internalFrameClosing(InternalFrameEvent event){
+                super.internalFrameClosing(event);
+                closingPanelLogic(event);
+            }
+        });
+
+        return this;
     }
 }
