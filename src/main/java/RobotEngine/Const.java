@@ -10,4 +10,7 @@ public class Const {
 
     public static final double maxVelocity = 0.1;
     public static final double maxAngularVelocity = 0.001;
+
+    public static int GAME_FIELD_WIDTH = 400;
+    public static int GAME_FIELD_HEIGHT = 400;
 }
