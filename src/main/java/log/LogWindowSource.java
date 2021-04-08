@@ -43,7 +43,6 @@ public class LogWindowSource
         {
             m_listeners.remove(listener);
             m_activeListeners = null;
-
         }
     }
     

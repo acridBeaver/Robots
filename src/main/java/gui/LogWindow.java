@@ -4,26 +4,23 @@ import java.awt.BorderLayout;
 import java.awt.EventQueue;
 import java.awt.TextArea;
 
-import javax.swing.JInternalFrame;
 import javax.swing.JPanel;
 import javax.swing.event.InternalFrameAdapter;
-import javax.swing.event.InternalFrameEvent;
 
 import log.LogChangeListener;
 import log.LogEntry;
 import log.LogWindowSource;
 import log.Logger;
 
-import static gui.ClosingPanel.closingPanelLogic;
-
-public class LogWindow extends JInternalFrame implements LogChangeListener
+public class LogWindow extends Window implements LogChangeListener
 {
-    private LogWindowSource m_logSource;
-    private TextArea m_logContent;
+    private final LogWindowSource m_logSource;
+    private final TextArea m_logContent;
 
     public LogWindow(LogWindowSource logSource) 
     {
-        super("Протокол работы", true, true, true, true);
+        super("Протокол работы");
+        this.addInternalFrameListener(new UnregisterAdapter(this));
         m_logSource = logSource;
         m_logSource.registerListener(this);
         m_logContent = new TextArea("");
@@ -34,6 +31,12 @@ public class LogWindow extends JInternalFrame implements LogChangeListener
         getContentPane().add(panel);
         pack();
         updateLogContent();
+
+        this.setLocation(10, 10);
+        this.setSize(300, 800);
+        setMinimumSize(this.getSize());
+        this.pack();
+        Logger.debug("Протокол работает");
     }
 
     private void updateLogContent()
@@ -51,32 +54,17 @@ public class LogWindow extends JInternalFrame implements LogChangeListener
         return m_logSource;
     }
 
-    private void unregisterListener() {
+    public void unregisterListener() {
         m_logSource.unregisterListener(this);
-    }
-
-    protected LogWindow createLogWindow() {
-
-        this.setLocation(10, 10);
-        this.setSize(300, 800);
-        setMinimumSize(this.getSize());
-        this.addInternalFrameListener(new InternalFrameAdapter() {
-            @Override
-            public void internalFrameClosing(InternalFrameEvent event) {
-                super.internalFrameClosing(event);
-                closingPanelLogic(event);
-                unregisterListener();
-
-            }
-        });
-        this.pack();
-        Logger.debug("Протокол работает");
-        return this;
     }
     
     @Override
     public void onLogChanged()
     {
         EventQueue.invokeLater(this::updateLogContent);
+    }
+
+    @Override
+    public void changeAdapter(InternalFrameAdapter adapter) {
     }
 }

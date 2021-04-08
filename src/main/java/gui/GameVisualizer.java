@@ -18,8 +18,7 @@ import RobotEngine.Const;
 
 public class GameVisualizer extends JPanel
 {
-    private final Timer m_timer = initTimer();
-    
+
     private static Timer initTimer() 
     {
         return new Timer("events generator", true);
@@ -27,6 +26,7 @@ public class GameVisualizer extends JPanel
 
     public GameVisualizer()
     {
+        Timer m_timer = initTimer();
         m_timer.schedule(new TimerTask()
         {
             @Override

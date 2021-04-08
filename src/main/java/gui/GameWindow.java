@@ -14,30 +14,20 @@ import javax.swing.event.InternalFrameEvent;
 
 import static gui.ClosingPanel.closingPanelLogic;
 
-public class GameWindow extends JInternalFrame
+public class GameWindow extends Window
 {
     private final GameVisualizer m_visualizer;
 
-    public GameWindow()
+    public GameWindow(String name)
     {
-        super("Игровое поле", true, true, true, true);
+        super(name);
+        this.addInternalFrameListener(new ClosingAdapter());
         m_visualizer = new GameVisualizer();
         JPanel panel = new JPanel(new BorderLayout());
         panel.add(m_visualizer, BorderLayout.CENTER);
         getContentPane().add(panel);
         pack();
-    }
-
-    protected GameWindow CreateGameWindow(){
         this.setLocation(50,50);
-        this.addInternalFrameListener(new InternalFrameAdapter() {
-            @Override
-            public void internalFrameClosing(InternalFrameEvent event){
-                super.internalFrameClosing(event);
-                closingPanelLogic(event);
-            }
-        });
-
         addComponentListener(new ComponentAdapter() {
             @Override
             public void componentResized(ComponentEvent e) {
@@ -45,7 +35,10 @@ public class GameWindow extends JInternalFrame
                 Const.GAME_FIELD_WIDTH = getWidth() - 10;
             }
         });
+    }
 
-        return this;
+    @Override
+    public void changeAdapter(InternalFrameAdapter adapter) {
+
     }
 }
