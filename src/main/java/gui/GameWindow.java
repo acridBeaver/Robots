@@ -31,7 +31,7 @@ public class GameWindow extends Window
         addComponentListener(new ComponentAdapter() {
             @Override
             public void componentResized(ComponentEvent e) {
-                Const.GAME_FIELD_HEIGHT = getHeight() - 30;
+                Const.GAME_FIELD_HEIGHT = getHeight() - 10;
                 Const.GAME_FIELD_WIDTH = getWidth() - 10;
             }
         });

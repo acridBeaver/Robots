@@ -24,6 +24,7 @@ public class Mover {
     }
 
     private static void moveRobot(double velocity, double angularVelocity, double duration) {
+        applyGameBounds();
         velocity = applyLimits(velocity, 0, Const.maxVelocity);
         angularVelocity = applyLimits(angularVelocity,
                 -Const.maxAngularVelocity, Const.maxAngularVelocity);
@@ -62,9 +63,17 @@ public class Mover {
 
     private static boolean outOfBounds(Point2D.Double point) {
         int widthOffset = 5;
-        int heightOffset = 30;
+        int heightOffset = 5;
         return point.x + widthOffset > Const.GAME_FIELD_WIDTH || point.x < 5
                 || point.y + heightOffset > Const.GAME_FIELD_HEIGHT || point.y < 5;
+    }
+
+    private static void applyGameBounds() {
+        if (Const.m_robotPositionX > Const.GAME_FIELD_WIDTH + 10) {
+            Const.m_robotPositionX = Const.GAME_FIELD_WIDTH - 5;
+        } else if (Const.m_robotPositionY > Const.GAME_FIELD_HEIGHT + 10) {
+            Const.m_robotPositionY = Const.GAME_FIELD_HEIGHT - 5;
+        }
     }
 
     private static double getNewRobotDirection(Point2D.Double position,
