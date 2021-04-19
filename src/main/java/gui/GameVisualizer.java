@@ -13,8 +13,8 @@ import java.util.TimerTask;
 
 import javax.swing.JPanel;
 
-import RobotEngine.Mover;
-import RobotEngine.Const;
+import engine.Mover;
+import engine.Const;
 
 public class GameVisualizer extends JPanel
 {

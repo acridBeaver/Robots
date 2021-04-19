@@ -1,18 +1,13 @@
 package gui;
 
-import RobotEngine.Const;
-import RobotEngine.Mover;
+import engine.Const;
 
 import java.awt.BorderLayout;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 
-import javax.swing.JInternalFrame;
 import javax.swing.JPanel;
 import javax.swing.event.InternalFrameAdapter;
-import javax.swing.event.InternalFrameEvent;
-
-import static gui.ClosingPanel.closingPanelLogic;
 
 public class GameWindow extends Window
 {
