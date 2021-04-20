@@ -19,7 +19,7 @@ public class LogWindow extends Window implements LogChangeListener
 
     public LogWindow(LogWindowSource logSource) 
     {
-        super("Протокол работы");
+        super("Work protocol");
         this.addInternalFrameListener(new UnregisterAdapter(this));
         m_logSource = logSource;
         m_logSource.registerListener(this);
@@ -35,7 +35,6 @@ public class LogWindow extends Window implements LogChangeListener
         this.setLocation(10, 10);
         this.setSize(300, 800);
         setMinimumSize(this.getSize());
-        this.pack();
         Logger.debug("Протокол работает");
     }
 

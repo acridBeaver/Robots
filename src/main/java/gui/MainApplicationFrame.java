@@ -2,22 +2,16 @@ package gui;
 
 import java.awt.Dimension;
 import java.awt.Toolkit;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
 
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Optional;
 import javax.swing.JDesktopPane;
 import javax.swing.JFrame;
-import javax.swing.JInternalFrame;
-import javax.swing.JMenu;
-import javax.swing.JMenuBar;
-import javax.swing.JMenuItem;
-import javax.swing.KeyStroke;
-import javax.swing.SwingUtilities;
-import javax.swing.UIManager;
-import javax.swing.UnsupportedLookAndFeelException;
 
 import log.Logger;
+import serializer.WindowPreset;
+import serializer.WindowPresetToDatConverter;
 
 /**
  * Что требуется сделать:
@@ -28,14 +22,14 @@ import log.Logger;
 public class MainApplicationFrame extends JFrame
 {
     private final JDesktopPane desktopPane = new JDesktopPane();
-    private final Menu menuBar;
+    private final Map<String, Window> windowRegistry;
+    private final WindowPresetToDatConverter converter;
 
     private static final int PIXEL_INSET = 50;
-    private static final int WINDOW_WIDTH = 400;
-    private static final int WINDOW_HEIGHT = 400;
-
 
     public MainApplicationFrame() {
+        windowRegistry = new HashMap<>();
+        converter = new WindowPresetToDatConverter();
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         setBounds(PIXEL_INSET, PIXEL_INSET,
             screenSize.width  - PIXEL_INSET * 2,
@@ -43,22 +37,39 @@ public class MainApplicationFrame extends JFrame
 
         setContentPane(desktopPane);
 
-
         LogWindow logWindow = new LogWindow(Logger.getDefaultLogSource());
         addWindow(logWindow);
 
-        Window gameWindow = new GameWindow("Игровое поле");
-        gameWindow.setSize(WINDOW_WIDTH,  WINDOW_HEIGHT);
+        Window gameWindow = new GameWindow("Game Field");
         addWindow(gameWindow);
 
-        this.menuBar = new Menu(this);
+        Menu menuBar = new Menu(this);
         setJMenuBar(menuBar.generateMenuBar());
         setDefaultCloseOperation(EXIT_ON_CLOSE);
     }
 
-    protected void addWindow(JInternalFrame frame)
+    private void addWindow(Window frame)
     {
+        windowRegistry.put(frame.getTitle(), frame);
         desktopPane.add(frame);
         frame.setVisible(true);
+    }
+
+    private void saveWindowPresets() {
+        for (Map.Entry<String, Window> entry : windowRegistry.entrySet()) {
+            if (entry.getValue().isClosed()) {
+                continue;
+            }
+
+            WindowPreset currentPreset = entry.getValue().getPreset();
+            converter.convertToFile(entry.getKey(), currentPreset);
+        }
+    }
+
+    private void loadWindowPresets() {
+        for (Map.Entry<String, Window> entry : windowRegistry.entrySet()) {
+            Optional<WindowPreset> preset = converter.getFromFile(entry.getKey());
+            preset.ifPresent(p -> entry.getValue().applyPreset(p));
+        }
     }
 }

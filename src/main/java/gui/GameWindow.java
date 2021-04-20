@@ -3,6 +3,8 @@ package gui;
 import engine.Const;
 
 import java.awt.BorderLayout;
+import java.awt.Dimension;
+import java.awt.Point;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 
@@ -13,16 +15,21 @@ public class GameWindow extends Window
 {
     private final GameVisualizer m_visualizer;
 
+    private static final Dimension DEFAULT_SIZE = new Dimension(400, 400);
+    private static final Point DEFAULT_LOCATION = new Point(50, 50);
+
     public GameWindow(String name)
     {
         super(name);
-        this.addInternalFrameListener(new ClosingAdapter());
+        this.setSize(DEFAULT_SIZE);
+        this.setLocation(DEFAULT_LOCATION);
+        setMinimumSize(new Dimension(200, 200));
+        addInternalFrameListener(new ClosingAdapter());
         m_visualizer = new GameVisualizer();
         JPanel panel = new JPanel(new BorderLayout());
         panel.add(m_visualizer, BorderLayout.CENTER);
         getContentPane().add(panel);
-        pack();
-        this.setLocation(50,50);
+
         addComponentListener(new ComponentAdapter() {
             @Override
             public void componentResized(ComponentEvent e) {

@@ -1,10 +1,12 @@
 package serializer;
 
+import java.awt.Dimension;
+import java.awt.Point;
 import java.io.Serializable;
 
 public class WindowPreset implements Serializable {
-    private int width;
-    private int height;
+    private Dimension size;
+    private Point location;
     private boolean isMinimized;
 
     public boolean isMinimized() {
@@ -15,27 +17,19 @@ public class WindowPreset implements Serializable {
         isMinimized = minimized;
     }
 
-    public int getHeight() {
-        return height;
+    public Point getLocation() {
+        return location;
     }
 
-    public void setHeight(int height) {
-        if (height <= 0) {
-            throw new IllegalArgumentException("Window height cannot be less than zero");
-        }
-
-        this.height = height;
+    public void setLocation(Point location) {
+        this.location = location;
     }
 
-    public int getWidth() {
-        return width;
+    public Dimension getSize() {
+        return size;
     }
 
-    public void setWidth(int width) {
-        if (width <= 0) {
-            throw new IllegalArgumentException("Window width cannot be less than zero");
-        }
-
-        this.width = width;
+    public void setSize(Dimension size) {
+        this.size = size;
     }
 }
