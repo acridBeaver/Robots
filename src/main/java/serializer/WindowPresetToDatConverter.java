@@ -45,7 +45,7 @@ public class WindowPresetToDatConverter {
         }
     }
 
-    public boolean hasPresets() {
+    public boolean hasPresets() { // TODO: вызвать для проверки наличия пресетов окон (в момент открытия окна)
         File presetFolder = DEFAULT_DIR.toFile();
         return presetFolder.isDirectory()
                 && Objects.requireNonNullElse(presetFolder.list(), new String[0]).length > 0;

@@ -55,7 +55,7 @@ public class MainApplicationFrame extends JFrame
         frame.setVisible(true);
     }
 
-    private void saveWindowPresets() {
+    private void saveWindowPresets() { // TODO: вызвать при событии закрытия окна MainApplicationFrame
         for (Map.Entry<String, Window> entry : windowRegistry.entrySet()) {
             if (entry.getValue().isClosed()) {
                 continue;
@@ -66,7 +66,7 @@ public class MainApplicationFrame extends JFrame
         }
     }
 
-    private void loadWindowPresets() {
+    private void loadWindowPresets() { // TODO: вызвать при событии открытия / запуска окна MainApplicationFrame, если нажали ДА в диалоге
         for (Map.Entry<String, Window> entry : windowRegistry.entrySet()) {
             Optional<WindowPreset> preset = converter.getFromFile(entry.getKey());
             preset.ifPresent(p -> entry.getValue().applyPreset(p));
