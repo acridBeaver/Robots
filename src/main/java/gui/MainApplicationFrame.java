@@ -3,6 +3,8 @@ package gui;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
@@ -12,6 +14,7 @@ import javax.swing.JFrame;
 import log.Logger;
 import serializer.WindowPreset;
 import serializer.WindowPresetToDatConverter;
+import static gui.ClosingFramePanel.closingLogic;
 
 /**
  * Что требуется сделать:
@@ -45,7 +48,11 @@ public class MainApplicationFrame extends JFrame
 
         Menu menuBar = new Menu(this);
         setJMenuBar(menuBar.generateMenuBar());
+        if (converter.hasPresets()){
+            closingLogic(this);
+        }
         setDefaultCloseOperation(EXIT_ON_CLOSE);
+        addWindowListener(new ClosingFrameAdapter());
     }
 
     private void addWindow(Window frame)
@@ -66,10 +73,17 @@ public class MainApplicationFrame extends JFrame
         }
     }
 
-    private void loadWindowPresets() { // TODO: вызвать при событии открытия / запуска окна MainApplicationFrame, если нажали ДА в диалоге
+    public void loadWindowPresets() { // TODO: вызвать при событии открытия / запуска окна MainApplicationFrame, если нажали ДА в диалоге
         for (Map.Entry<String, Window> entry : windowRegistry.entrySet()) {
             Optional<WindowPreset> preset = converter.getFromFile(entry.getKey());
             preset.ifPresent(p -> entry.getValue().applyPreset(p));
+        }
+    }
+
+    public class ClosingFrameAdapter extends WindowAdapter {
+        @Override
+        public void windowClosing(WindowEvent e){
+                saveWindowPresets();
         }
     }
 }
