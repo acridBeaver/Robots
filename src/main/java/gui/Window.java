@@ -3,7 +3,7 @@ package gui;
 import java.beans.PropertyVetoException;
 import javax.swing.*;
 import javax.swing.event.InternalFrameAdapter;
-import serializer.WindowPreset;
+import gui.model.WindowPreset;
 
 public abstract class Window extends JInternalFrame {
     public Window(String name){

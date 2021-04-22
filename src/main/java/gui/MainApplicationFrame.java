@@ -12,8 +12,8 @@ import javax.swing.JDesktopPane;
 import javax.swing.JFrame;
 
 import log.Logger;
-import serializer.WindowPreset;
-import serializer.WindowPresetToDatConverter;
+import gui.model.WindowPreset;
+import serializer.WindowPresetConverter;
 import static gui.ClosingFramePanel.closingLogic;
 
 /**
@@ -26,13 +26,13 @@ public class MainApplicationFrame extends JFrame
 {
     private final JDesktopPane desktopPane = new JDesktopPane();
     private final Map<String, Window> windowRegistry;
-    private final WindowPresetToDatConverter converter;
+    private final WindowPresetConverter converter;
 
     private static final int PIXEL_INSET = 50;
 
     public MainApplicationFrame() {
         windowRegistry = new HashMap<>();
-        converter = new WindowPresetToDatConverter();
+        converter = new WindowPresetConverter();
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         setBounds(PIXEL_INSET, PIXEL_INSET,
             screenSize.width  - PIXEL_INSET * 2,
@@ -62,7 +62,7 @@ public class MainApplicationFrame extends JFrame
         frame.setVisible(true);
     }
 
-    private void saveWindowPresets() { // TODO: вызвать при событии закрытия окна MainApplicationFrame
+    private void saveWindowPresets() {
         for (Map.Entry<String, Window> entry : windowRegistry.entrySet()) {
             if (entry.getValue().isClosed()) {
                 continue;
@@ -73,7 +73,7 @@ public class MainApplicationFrame extends JFrame
         }
     }
 
-    public void loadWindowPresets() { // TODO: вызвать при событии открытия / запуска окна MainApplicationFrame, если нажали ДА в диалоге
+    public void loadWindowPresets() {
         for (Map.Entry<String, Window> entry : windowRegistry.entrySet()) {
             Optional<WindowPreset> preset = converter.getFromFile(entry.getKey());
             preset.ifPresent(p -> entry.getValue().applyPreset(p));
@@ -83,7 +83,7 @@ public class MainApplicationFrame extends JFrame
     public class ClosingFrameAdapter extends WindowAdapter {
         @Override
         public void windowClosing(WindowEvent e){
-                saveWindowPresets();
+            saveWindowPresets();
         }
     }
 }

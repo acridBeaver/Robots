@@ -1,5 +1,6 @@
 package serializer;
 
+import gui.model.WindowPreset;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -9,14 +10,14 @@ import java.nio.file.Path;
 import java.util.Objects;
 import java.util.Optional;
 
-public class WindowPresetToDatConverter {
+public class WindowPresetConverter {
     private static final Path DEFAULT_DIR = Path.of("presets");
 
     private final Serializer<WindowPreset> presetSerializer;
     private final Deserializer<WindowPreset> presetDeserializer;
 
 
-    public WindowPresetToDatConverter() {
+    public WindowPresetConverter() {
         presetSerializer = new WindowPresetSerializer();
         presetDeserializer = new WindowPresetDeserializer();
     }
@@ -45,7 +46,7 @@ public class WindowPresetToDatConverter {
         }
     }
 
-    public boolean hasPresets() { // TODO: вызвать для проверки наличия пресетов окон (в момент открытия окна)
+    public boolean hasPresets() {
         File presetFolder = DEFAULT_DIR.toFile();
         return presetFolder.isDirectory()
                 && Objects.requireNonNullElse(presetFolder.list(), new String[0]).length > 0;

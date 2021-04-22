@@ -1,4 +1,4 @@
-package serializer;
+package gui.model;
 
 import java.awt.Dimension;
 import java.awt.Point;
