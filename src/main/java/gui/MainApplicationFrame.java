@@ -13,6 +13,7 @@ import javax.swing.JFrame;
 
 import log.Logger;
 import gui.model.WindowPreset;
+import serializer.MainFrameSerializer;
 import serializer.WindowPresetConverter;
 import static gui.ClosingFramePanel.closingLogic;
 
@@ -50,6 +51,7 @@ public class MainApplicationFrame extends JFrame
         setJMenuBar(menuBar.generateMenuBar());
         if (converter.hasPresets()){
             closingLogic(this);
+            MainFrameSerializer.deserialize(this);
         }
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         addWindowListener(new ClosingFrameAdapter());
@@ -84,6 +86,7 @@ public class MainApplicationFrame extends JFrame
         @Override
         public void windowClosing(WindowEvent e){
             saveWindowPresets();
+            MainFrameSerializer.serialize(MainApplicationFrame.this);
         }
     }
 }
