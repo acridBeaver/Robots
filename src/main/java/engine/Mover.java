@@ -5,6 +5,7 @@ import java.awt.geom.Point2D;
 public class Mover {
 
     public static void onModelUpdateEvent() {
+        applyGameBounds();
         double distance = distance(Const.m_targetPositionX, Const.m_targetPositionY,
                 Const.m_robotPositionX, Const.m_robotPositionY);
         if (distance < 0.5) {
@@ -24,7 +25,7 @@ public class Mover {
     }
 
     private static void moveRobot(double velocity, double angularVelocity, double duration) {
-        applyGameBounds();
+
         velocity = applyLimits(velocity, 0, Const.maxVelocity);
         angularVelocity = applyLimits(angularVelocity,
                 -Const.maxAngularVelocity, Const.maxAngularVelocity);
