@@ -6,10 +6,10 @@ import javax.swing.*;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 
-public class Menu {
+public class MenuBar {
     private final MainApplicationFrame frame;
 
-    public Menu(MainApplicationFrame frame){
+    public MenuBar(MainApplicationFrame frame){
         this.frame = frame;
     }
 

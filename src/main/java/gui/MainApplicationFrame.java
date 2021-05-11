@@ -47,7 +47,7 @@ public class MainApplicationFrame extends JFrame
         Window gameWindow = new GameWindow("Game Field");
         addWindow(gameWindow);
 
-        Menu menuBar = new Menu(this);
+        MenuBar menuBar = new MenuBar(this);
         setJMenuBar(menuBar.generateMenuBar());
         if (converter.hasPresets()){
             closingLogic(this);
