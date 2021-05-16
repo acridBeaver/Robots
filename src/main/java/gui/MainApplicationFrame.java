@@ -1,5 +1,8 @@
 package gui;
 
+import gui.windows.GameWindow;
+import gui.windows.LogWindow;
+import gui.windows.Window;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 

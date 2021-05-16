@@ -1,7 +1,6 @@
 package gui;
 
-import log.LogChangeListener;
-import log.LogWindowSource;
+import gui.windows.LogWindow;
 
 import javax.swing.event.InternalFrameAdapter;
 import javax.swing.event.InternalFrameEvent;

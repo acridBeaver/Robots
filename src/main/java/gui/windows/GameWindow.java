@@ -1,7 +1,9 @@
-package gui;
+package gui.windows;
 
 import engine.Const;
 
+import gui.ClosingAdapter;
+import gui.GameVisualizer;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Point;

@@ -1,4 +1,4 @@
-package gui;
+package gui.windows;
 
 import java.beans.PropertyVetoException;
 import javax.swing.*;
