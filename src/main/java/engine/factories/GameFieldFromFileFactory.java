@@ -1,4 +1,4 @@
-package engine;
+package engine.factories;
 
 import java.awt.Point;
 import java.io.File;
@@ -7,7 +7,7 @@ import java.io.IOException;
 import java.util.Arrays;
 import model.GameField;
 
-public class GameFieldFromFileFactory implements GameFieldFactory {
+public class GameFieldFromFileFactory extends BaseGameFieldFactory {
   private final File fieldFile;
 
   public GameFieldFromFileFactory(String filename) {
@@ -34,23 +34,4 @@ public class GameFieldFromFileFactory implements GameFieldFactory {
     char[][] maze = parseMazeFromString(Arrays.copyOfRange(lines, 2, lines.length));
     return new GameField(maze, start, end);
   }
-
-  private Point parsePointFromString(String str) {
-    String[] components = str.split(" ");
-    int x = Integer.parseInt(components[0]);
-    int y = Integer.parseInt(components[1]);
-    return new Point(x, y);
-  }
-
-  private char[][] parseMazeFromString(String[] strArray) {
-    int height = strArray.length;
-    int width = strArray[0].length();
-    char[][] result = new char[height][width];
-    for (int i = 0; i < height; i++) {
-      result[i] = strArray[i].toCharArray();
-    }
-
-    return result;
-  }
-
 }
