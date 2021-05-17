@@ -17,13 +17,14 @@ public class Robot implements MovableModel {
         return y;
     }
 
-    @Override
-    public void move(Direction direction) {
-
-    }
 
     @Override
     public Direction getDirection() {
         return direction;
+    }
+
+    @Override
+    public void move(double velocity, double angularVelocity, double duration) {
+
     }
 }
