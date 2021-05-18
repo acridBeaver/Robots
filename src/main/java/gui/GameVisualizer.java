@@ -8,6 +8,7 @@ import java.awt.Point;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.geom.AffineTransform;
+import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -17,35 +18,22 @@ import engine.Mover;
 import engine.Const;
 import model.GameField;
 import model.MazeCell;
-/* TODO: Перепиши класс чтобы:
-1. В конструктор передавался объект класса GameField
-
-1. В методе paint() нарисовался лабиринт на основании GameField:
-    2.1 лабиринт является двумерным массивом char и имеет целочисленные координаты
-    2.2 у лабиринта есть свободные клетки (MazeCell.EMPTY) и стены (MazeCell.WALL). Для свободной
-    клетки пусть будет пустой квадрат, а для стены закрашенный
-
-3. Продумай ещё, что тебе надо будет по координатам окна определять на какую клетку
-нажали (то есть мы нажимаем на пустую клетку лабиринта и туда пойдут роботы => тебе нужно по
-координатам Point понять на что нажали)
-
-4. Также напиши метод который наоборот по целочисленным координатам в лабиринте вычисляет
-Point в окне (понадобится чтоб понять куда перемещать робота в окне)
-
- */
+import model.Robot;
 
 public class GameVisualizer extends JPanel
 {
     private final GameField field;
+    private final List<Robot> models;
 
     private static Timer initTimer() 
     {
         return new Timer("events generator", true);
     }
 
-    public GameVisualizer(GameField field)
+    public GameVisualizer(GameField field, List<Robot> models)
     {
         this.field = field;
+        this.models = models;
         Timer m_timer = initTimer();
         m_timer.schedule(new TimerTask()
         {

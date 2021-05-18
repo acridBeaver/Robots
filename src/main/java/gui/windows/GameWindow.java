@@ -3,13 +3,19 @@ package gui.windows;
 import engine.Const;
 import engine.factories.GameFieldFactory;
 import engine.factories.GameFieldFromFileFactory;
+import engine.rules.BfsMovementRule;
+import engine.rules.DfsMovementRule;
 import gui.ClosingAdapter;
 import gui.GameVisualizer;
+import model.GameField;
+import model.Robot;
+
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Point;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
+import java.util.List;
 import javax.swing.JPanel;
 import javax.swing.event.InternalFrameAdapter;
 
@@ -27,19 +33,17 @@ public class GameWindow extends Window
         this.setLocation(DEFAULT_LOCATION);
         setMinimumSize(new Dimension(200, 200));
         addInternalFrameListener(new ClosingAdapter());
+
         GameFieldFactory factory = new GameFieldFromFileFactory("maze.txt");
-        m_visualizer = new GameVisualizer(factory.create());
+        GameField gameField = factory.create();
+        List<Robot> robotList = List.of(
+                new Robot(gameField.getMazeStart(), new BfsMovementRule(gameField)),
+                new Robot(gameField.getMazeStart(), new DfsMovementRule(gameField)));
+        m_visualizer = new GameVisualizer(gameField, robotList);
+
         JPanel panel = new JPanel(new BorderLayout());
         panel.add(m_visualizer, BorderLayout.CENTER);
         getContentPane().add(panel);
-
-        addComponentListener(new ComponentAdapter() {
-            @Override
-            public void componentResized(ComponentEvent e) {
-                Const.GAME_FIELD_HEIGHT = getHeight() - 10;
-                Const.GAME_FIELD_WIDTH = getWidth() - 10;
-            }
-        });
     }
 
     @Override
