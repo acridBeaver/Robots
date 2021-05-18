@@ -22,10 +22,11 @@ public class GameField {
     }
 
     public MazeCell getMazeCellType(int x, int y) {
-        if (x >= maze.length || x < 0 || y >= maze[x].length
-            || y < 0 || maze[x][y] == '0') {
+        if (x >= getWidth() || x < 0 || y >= getHeight()
+            || y < 0 || maze[y][x] == '0') {
+
             return MazeCell.WALL;
-        } else if (maze[x][y] == '.') {
+        } else if (maze[y][x] == '.') {
             return MazeCell.EMPTY;
         }
 
