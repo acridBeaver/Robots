@@ -15,6 +15,8 @@ import javax.swing.JPanel;
 
 import engine.Mover;
 import engine.Const;
+import model.GameField;
+import model.MazeCell;
 /* TODO: Перепиши класс чтобы:
 1. В конструктор передавался объект класса GameField
 
@@ -34,14 +36,16 @@ Point в окне (понадобится чтоб понять куда пер�
 
 public class GameVisualizer extends JPanel
 {
+    private final GameField field;
 
     private static Timer initTimer() 
     {
         return new Timer("events generator", true);
     }
 
-    public GameVisualizer()
+    public GameVisualizer(GameField field)
     {
+        this.field = field;
         Timer m_timer = initTimer();
         m_timer.schedule(new TimerTask()
         {
@@ -69,6 +73,10 @@ public class GameVisualizer extends JPanel
             }
         });
         setDoubleBuffered(true);
+    }
+
+    private int getDrovingCoordinates(int point){
+        return point*5;
     }
 
     protected void setTargetPosition(Point p)
@@ -104,6 +112,16 @@ public class GameVisualizer extends JPanel
     private static void drawOval(Graphics g, int centerX, int centerY, int diam1, int diam2)
     {
         g.drawOval(centerX - diam1 / 2, centerY - diam2 / 2, diam1, diam2);
+    }
+
+    private void drawField(Graphics2D g)
+    {
+        for (int x = 0; x <= field.getMazeEnd().x; x++)
+            for (int y = 0; y <= field.getMazeEnd().y; y++){
+                if (field.getMazeCellType(x, y) == MazeCell.WALL){
+                    g.fillRect(x, y, 5, 5);
+                }
+            }
     }
     
     private void drawRobot(Graphics2D g, int x, int y, double direction)
