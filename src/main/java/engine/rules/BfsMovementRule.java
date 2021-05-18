@@ -18,8 +18,8 @@ public class BfsMovementRule extends BaseMovementRule {
   }
 
   @Override
-  public Point getNextPosition(Point currentPosition, Point destination) {
-    if (currentPosition.equals(destination)) {
+  public Point getNextPosition(Point currentPosition) {
+    if (currentPosition.equals(gameField.getMazeEnd())) {
       return currentPosition;
     }
 

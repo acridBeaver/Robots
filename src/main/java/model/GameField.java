@@ -5,7 +5,8 @@ import java.awt.Point;
 public class GameField {
     private final char[][] maze;
     private final Point mazeStart;
-    private Point mazeEnd;
+
+    private volatile Point mazeEnd;
 
     public GameField(char[][] maze, Point mazeStart, Point mazeEnd) {
         this.maze = maze;

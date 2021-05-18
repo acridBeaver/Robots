@@ -31,7 +31,7 @@ public class Robot {
             return;
         }
 
-        Point nextPosition = movementRule.getNextPosition(currentPosition.get(), destination);
+        Point nextPosition = movementRule.getNextPosition(currentPosition.get());
         direction = getNewDirection(nextPosition);
         currentPosition.set(nextPosition);
     }

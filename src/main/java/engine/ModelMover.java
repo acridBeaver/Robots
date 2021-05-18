@@ -1,5 +1,6 @@
 package engine;
 
+import model.GameField;
 import model.Robot;
 
 import java.awt.Point;
@@ -12,10 +13,10 @@ import java.util.concurrent.TimeUnit;
 public class ModelMover {
   private final ScheduledExecutorService executorService;
   private final List<Robot> models;
+  private final GameField gameField;
 
-  private Point currentDestination;
-
-  public ModelMover() {
+  public ModelMover(GameField gameField) {
+    this.gameField = gameField;
     executorService = Executors.newScheduledThreadPool(4);
     models = new ArrayList<>();
   }
@@ -27,7 +28,7 @@ public class ModelMover {
   public void startMovingModels() {
     for (Robot model : models) {
       Runnable task = new ModelMovingTask(model);
-      executorService.scheduleAtFixedRate(task, 50, 500, TimeUnit.MILLISECONDS);
+      executorService.scheduleAtFixedRate(task, 500, 500, TimeUnit.MILLISECONDS);
     }
   }
 
@@ -44,7 +45,7 @@ public class ModelMover {
 
     @Override
     public void run() {
-      model.moveByStep(currentDestination);
+      model.moveByStep(gameField.getMazeEnd());
     }
   }
 }

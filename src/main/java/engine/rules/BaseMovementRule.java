@@ -7,7 +7,7 @@ import model.GameField;
 import model.MazeCell;
 
 public abstract class BaseMovementRule implements MovementRule {
-  private final GameField gameField;
+  protected final GameField gameField;
 
   public BaseMovementRule(GameField gameField) {
     this.gameField = gameField;

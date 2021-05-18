@@ -1,6 +1,7 @@
 package gui.windows;
 
 import engine.Const;
+import engine.ModelMover;
 import engine.factories.GameFieldFactory;
 import engine.factories.GameFieldFromFileFactory;
 import engine.rules.BfsMovementRule;
@@ -36,9 +37,13 @@ public class GameWindow extends Window
 
         GameFieldFactory factory = new GameFieldFromFileFactory("maze.txt");
         GameField gameField = factory.create();
-        List<Robot> robotList = List.of(
-                new Robot(gameField.getMazeStart(), new BfsMovementRule(gameField)),
-                new Robot(gameField.getMazeStart(), new DfsMovementRule(gameField)));
+        Robot robotBfs = new Robot(gameField.getMazeStart(), new BfsMovementRule(gameField));
+        Robot robotDfs = new Robot(gameField.getMazeStart(), new DfsMovementRule(gameField));
+        ModelMover mover = new ModelMover(gameField);
+        mover.registerModel(robotBfs);
+        mover.registerModel(robotDfs);
+        mover.startMovingModels();
+        List<Robot> robotList = List.of(robotBfs, robotDfs);
         m_visualizer = new GameVisualizer(gameField, robotList);
 
         JPanel panel = new JPanel(new BorderLayout());

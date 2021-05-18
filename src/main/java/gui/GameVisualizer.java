@@ -14,7 +14,6 @@ import java.util.TimerTask;
 
 import javax.swing.JPanel;
 
-import engine.Mover;
 import engine.Const;
 import model.GameField;
 import model.MazeCell;
@@ -43,20 +42,18 @@ public class GameVisualizer extends JPanel
                 onRedrawEvent();
             }
         }, 0, 50);
-        m_timer.schedule(new TimerTask()
-        {
-            @Override
-            public void run()
-            {
-                Mover.onModelUpdateEvent();
-            }
-        }, 0, 10);
         addMouseListener(new MouseAdapter()
         {
             @Override
             public void mouseClicked(MouseEvent e)
             {
-                setTargetPosition(e.getPoint());
+                Point mazePoint = translate(e.getPoint());
+                System.out.println("Got new destination - " + mazePoint);
+                field.setMazeEnd(mazePoint);
+                for (Robot r : models) {
+                    r.stopMoving();
+                }
+
                 repaint();
             }
         });
@@ -64,14 +61,20 @@ public class GameVisualizer extends JPanel
     }
 
     private int getDrovingCoordinates(int point){
-        return point*50;
+        return point * 50;
     }
 
-    protected void setTargetPosition(Point p)
-    {
-        Const.m_targetPositionX = p.x;
-        Const.m_targetPositionY = p.y;
+    private Point getDrovingCoordinates2(Point point){
+        return new Point(point.x * 50, point.y * 50);
     }
+
+    public Point translate(Point p)
+    {
+        int x = p.x / 50;
+        int y = p.y / 50;
+        return new Point(x,y);
+    }
+
     
     protected void onRedrawEvent()
     {
@@ -89,6 +92,10 @@ public class GameVisualizer extends JPanel
         super.paint(g);
         Graphics2D g2d = (Graphics2D)g;
         drawField(g2d);
+        for (Robot r : models) {
+            drawRobot(g2d, r);
+        }
+
     }
     
     private static void fillOval(Graphics g, int centerX, int centerY, int diam1, int diam2)
@@ -112,20 +119,19 @@ public class GameVisualizer extends JPanel
             }
     }
     
-    private void drawRobot(Graphics2D g, int x, int y, double direction)
+    private void drawRobot(Graphics2D g, Robot r)
     {
-        int robotCenterX = round(Const.m_robotPositionX);
-        int robotCenterY = round(Const.m_robotPositionY);
-        AffineTransform t = AffineTransform.getRotateInstance(direction, robotCenterX, robotCenterY); 
+        Point robotPos = getDrovingCoordinates2(r.getCurrentPosition());
+        AffineTransform t = AffineTransform.getRotateInstance(0, robotPos.x, robotPos.y);
         g.setTransform(t);
         g.setColor(Color.MAGENTA);
-        fillOval(g, robotCenterX, robotCenterY, 30, 10);
+        fillOval(g, robotPos.x + 25, robotPos.y + 25, 30, 10);
         g.setColor(Color.BLACK);
-        drawOval(g, robotCenterX, robotCenterY, 30, 10);
+        drawOval(g, robotPos.x + 25, robotPos.y + 25, 30, 10);
         g.setColor(Color.WHITE);
-        fillOval(g, robotCenterX  + 10, robotCenterY, 5, 5);
+        fillOval(g, robotPos.x  + 35, robotPos.y + 25, 5, 5);
         g.setColor(Color.BLACK);
-        drawOval(g, robotCenterX  + 10, robotCenterY, 5, 5);
+        drawOval(g, robotPos.x  + 35, robotPos.y + 25, 5, 5);
     }
     
     private void drawTarget(Graphics2D g, int x, int y)
