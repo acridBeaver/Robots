@@ -76,7 +76,7 @@ public class GameVisualizer extends JPanel
     }
 
     private int getDrovingCoordinates(int point){
-        return point*5;
+        return point*50;
     }
 
     protected void setTargetPosition(Point p)
@@ -99,9 +99,8 @@ public class GameVisualizer extends JPanel
     public void paint(Graphics g)
     {
         super.paint(g);
-        Graphics2D g2d = (Graphics2D)g; 
-        drawRobot(g2d, round(Const.m_robotPositionX), round(Const.m_robotPositionY), Const.m_robotDirection);
-        drawTarget(g2d,Const.m_targetPositionX, Const.m_targetPositionY);
+        Graphics2D g2d = (Graphics2D)g;
+        drawField(g2d);
     }
     
     private static void fillOval(Graphics g, int centerX, int centerY, int diam1, int diam2)
@@ -116,10 +115,11 @@ public class GameVisualizer extends JPanel
 
     private void drawField(Graphics2D g)
     {
-        for (int x = 0; x <= field.getMazeEnd().x; x++)
-            for (int y = 0; y <= field.getMazeEnd().y; y++){
+        for (int x = 0; x < field.getWidth(); x++)
+            for (int y = 0; y < field.getHeight(); y++){
+                g.drawRect(getDrovingCoordinates(x), getDrovingCoordinates(y),50,50);
                 if (field.getMazeCellType(x, y) == MazeCell.WALL){
-                    g.fillRect(x, y, 5, 5);
+                    g.fillRect(getDrovingCoordinates(x), getDrovingCoordinates(y), 50, 50);
                 }
             }
     }

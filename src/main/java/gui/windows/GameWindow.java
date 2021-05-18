@@ -1,7 +1,8 @@
 package gui.windows;
 
 import engine.Const;
-
+import engine.factories.GameFieldFactory;
+import engine.factories.GameFieldFromFileFactory;
 import gui.ClosingAdapter;
 import gui.GameVisualizer;
 import java.awt.BorderLayout;
@@ -9,7 +10,6 @@ import java.awt.Dimension;
 import java.awt.Point;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
-
 import javax.swing.JPanel;
 import javax.swing.event.InternalFrameAdapter;
 
@@ -27,7 +27,8 @@ public class GameWindow extends Window
         this.setLocation(DEFAULT_LOCATION);
         setMinimumSize(new Dimension(200, 200));
         addInternalFrameListener(new ClosingAdapter());
-        m_visualizer = new GameVisualizer();
+        GameFieldFactory factory = new GameFieldFromFileFactory("maze.txt");
+        m_visualizer = new GameVisualizer(factory.create());
         JPanel panel = new JPanel(new BorderLayout());
         panel.add(m_visualizer, BorderLayout.CENTER);
         getContentPane().add(panel);
