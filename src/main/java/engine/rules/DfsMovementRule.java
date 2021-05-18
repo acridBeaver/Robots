@@ -11,8 +11,6 @@ public class DfsMovementRule extends BaseMovementRule {
   private final Deque<Point> stack;
   private final Set<Point> visited;
 
-  private volatile Point previousDestination;
-
   public DfsMovementRule(GameField gameField) {
     super(gameField);
     stack = new ArrayDeque<>();
@@ -38,5 +36,11 @@ public class DfsMovementRule extends BaseMovementRule {
 
     visited.add(nextPosition);
     return nextPosition;
+  }
+
+  @Override
+  public void resetCurrentPath() {
+    System.out.println("Resetting path for DFS search!");
+    visited.clear();
   }
 }

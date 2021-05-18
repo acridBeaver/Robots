@@ -11,8 +11,6 @@ public class BfsMovementRule extends BaseMovementRule {
   private final Deque<Point> queue;
   private final Set<Point> visited;
 
-  private volatile Point previousDestination;
-
   public BfsMovementRule(GameField gameField) {
     super(gameField);
     visited = new HashSet<>();
@@ -38,5 +36,11 @@ public class BfsMovementRule extends BaseMovementRule {
 
     visited.add(nextPosition);
     return nextPosition;
+  }
+
+  @Override
+  public void resetCurrentPath() {
+    System.out.println("Resetting path for BFS search!");
+    visited.clear();
   }
 }

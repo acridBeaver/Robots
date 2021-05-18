@@ -13,6 +13,7 @@ public class Robot {
     public Robot(Point initialPosition, MovementRule movementRule) {
         currentPosition = new AtomicReference<>(initialPosition);
         this.movementRule = movementRule;
+        direction = Direction.OLD;
     }
 
     public Direction getDirection() {
@@ -24,9 +25,20 @@ public class Robot {
     }
 
     public void moveByStep(Point destination) {
+        if (destination.equals(currentPosition.get())) {
+            System.out.println("Reached destination!");
+            direction = Direction.OLD;
+            return;
+        }
+
         Point nextPosition = movementRule.getNextPosition(currentPosition.get(), destination);
         direction = getNewDirection(nextPosition);
         currentPosition.set(nextPosition);
+    }
+
+    public void stopMoving() {
+        movementRule.resetCurrentPath();
+        direction = Direction.OLD;
     }
 
     private Direction getNewDirection(Point newPosition) {
@@ -44,7 +56,7 @@ public class Robot {
             return Direction.RIGHT;
         }
 
-        return Direction.NONE;
+        return Direction.OLD;
     }
 
     @Override
