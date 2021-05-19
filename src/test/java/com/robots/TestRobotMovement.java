@@ -29,7 +29,7 @@ public class TestRobotMovement {
     GameFieldFactory gameFieldFactory = new SimpleGameFieldFactory(TEST_MAZE_1, start, end);
     GameField testField = gameFieldFactory.create();
     MovementRule testRule = new BfsMovementRule(testField);
-    Robot testRobot = new Robot(start, testRule, 1);
+    Robot testRobot = new Robot(1, start, testRule);
     List<Point> actualRoute = new ArrayList<>();
     for (var i = 0; i < 10; i++) {
       System.out.printf("%s%n", testRobot);
@@ -51,7 +51,7 @@ public class TestRobotMovement {
     GameFieldFactory gameFieldFactory = new SimpleGameFieldFactory(TEST_MAZE_1, start, end);
     GameField testField = gameFieldFactory.create();
     MovementRule testRule = new DfsMovementRule(testField);
-    Robot testRobot = new Robot(start, testRule, 1);
+    Robot testRobot = new Robot(1, start, testRule);
     List<Point> actualRoute = new ArrayList<>();
     for (var i = 0; i < 10; i++) {
       System.out.printf("%s%n", testRobot);

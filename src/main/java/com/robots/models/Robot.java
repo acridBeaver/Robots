@@ -4,20 +4,22 @@ import com.robots.engine.rules.MovementRule;
 
 import java.awt.Point;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.atomic.AtomicReference;
 
 public class Robot implements MovableModel {
     private final AtomicReference<Point> currentPosition;
     private final MovementRule movementRule;
-    public final int id;
-    public final ArrayList<Point> way = new ArrayList<>();
+    private final int id;
+    private final ArrayList<Point> route;
 
     private volatile Direction direction;
 
-    public Robot(Point initialPosition, MovementRule movementRule, int id) {
+    public Robot(int id, Point initialPosition, MovementRule movementRule) {
         currentPosition = new AtomicReference<>(initialPosition);
-        this.movementRule = movementRule;
+        route = new ArrayList<>();
         direction = Direction.OLD;
+        this.movementRule = movementRule;
         this.id = id;
     }
 
@@ -32,6 +34,11 @@ public class Robot implements MovableModel {
     }
 
     @Override
+    public int getId() {
+        return id;
+    }
+
+    @Override
     public void moveByStep(Point destination) {
         if (destination.equals(currentPosition.get())) {
             direction = Direction.OLD;
@@ -39,7 +46,7 @@ public class Robot implements MovableModel {
         }
 
         Point nextPosition = movementRule.getNextPosition(currentPosition.get());
-        way.add(nextPosition);
+        route.add(nextPosition);
         direction = getNewDirection(nextPosition);
         currentPosition.set(nextPosition);
     }
@@ -48,7 +55,12 @@ public class Robot implements MovableModel {
     public void stopMoving() {
         movementRule.resetCurrentPath();
         direction = Direction.OLD;
-        way.clear();
+        route.clear();
+    }
+
+    @Override
+    public List<Point> getRoute() {
+        return route;
     }
 
     private Direction getNewDirection(Point newPosition) {

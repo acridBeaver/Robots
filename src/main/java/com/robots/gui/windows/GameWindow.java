@@ -8,6 +8,7 @@ import com.robots.engine.rules.DfsMovementRule;
 import com.robots.gui.GameVisualizer;
 import com.robots.gui.adapters.ClosingAdapter;
 import com.robots.models.GameField;
+import com.robots.models.MovableModel;
 import com.robots.models.Robot;
 
 import java.awt.BorderLayout;
@@ -20,7 +21,6 @@ import javax.swing.event.InternalFrameAdapter;
 public class GameWindow extends Window {
     private final GameVisualizer m_visualizer;
 
-    private static final Dimension DEFAULT_SIZE = new Dimension(400, 400);
     private static final Point DEFAULT_LOCATION = new Point(200, 200);
 
     public GameWindow(String name) {
@@ -32,13 +32,13 @@ public class GameWindow extends Window {
         GameFieldFactory factory = new GameFieldFromFileFactory("maze.txt");
         GameField gameField = factory.create();
         this.setSize(new Dimension(gameField.getWidth() * 50 + 10, gameField.getHeight() * 50 + 30));
-        Robot robotBfs = new Robot(gameField.getMazeStart(), new BfsMovementRule(gameField), 1);
-        Robot robotDfs = new Robot(gameField.getMazeStart(), new DfsMovementRule(gameField), 2);
+        Robot robotBfs = new Robot(1, gameField.getMazeStart(), new BfsMovementRule(gameField));
+        Robot robotDfs = new Robot(2, gameField.getMazeStart(), new DfsMovementRule(gameField));
         ModelMover mover = new ModelMover(gameField);
         mover.registerModel(robotBfs);
         mover.registerModel(robotDfs);
         mover.startMovingModels();
-        List<Robot> robotList = List.of(robotBfs, robotDfs);
+        List<MovableModel> robotList = List.of(robotBfs, robotDfs);
         m_visualizer = new GameVisualizer(gameField, robotList);
 
         JPanel panel = new JPanel(new BorderLayout());
