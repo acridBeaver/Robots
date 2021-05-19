@@ -1,6 +1,7 @@
 package com.robots.gui.windows;
 
 import static com.robots.gui.panels.ClosingFramePanel.closingLogic;
+import static com.robots.gui.panels.choseAlgorithms.choseLogic;
 
 import com.robots.gui.MenuBar;
 import com.robots.gui.model.WindowPreset;
@@ -13,6 +14,7 @@ import java.awt.Toolkit;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import javax.swing.JDesktopPane;
@@ -37,6 +39,9 @@ public class MainWindow extends JFrame {
 
         LogWindow logWindow = new LogWindow(Logger.getDefaultLogSource());
         addWindow(logWindow);
+
+        //TODO: Передать эту поеботу в GameWindow и там выбрать алгоритмы.
+        List<String> actualLogic = choseLogic(this);
 
         Window gameWindow = new GameWindow("Game Field");
         addWindow(gameWindow);
