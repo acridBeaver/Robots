@@ -1,8 +1,7 @@
-package gui;
+package gui.windows;
 
-import gui.windows.GameWindow;
-import gui.windows.LogWindow;
-import gui.windows.Window;
+import gui.MenuBar;
+
 import java.awt.Dimension;
 import java.awt.Toolkit;
 
@@ -18,15 +17,9 @@ import log.Logger;
 import gui.model.WindowPreset;
 import serializer.MainFrameSerializer;
 import serializer.WindowPresetConverter;
-import static gui.ClosingFramePanel.closingLogic;
+import static gui.panels.ClosingFramePanel.closingLogic;
 
-/**
- * Что требуется сделать:
- * 1. Метод создания меню перегружен функционалом и трудно читается.
- * Следует разделить его на серию более простых методов (или вообще выделить отдельный класс).
- *
- */
-public class MainApplicationFrame extends JFrame
+public class MainWindow extends JFrame
 {
     private final JDesktopPane desktopPane = new JDesktopPane();
     private final Map<String, Window> windowRegistry;
@@ -34,7 +27,7 @@ public class MainApplicationFrame extends JFrame
 
     private static final int PIXEL_INSET = 50;
 
-    public MainApplicationFrame() {
+    public MainWindow() {
         windowRegistry = new HashMap<>();
         converter = new WindowPresetConverter();
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
@@ -89,7 +82,7 @@ public class MainApplicationFrame extends JFrame
         @Override
         public void windowClosing(WindowEvent e){
             saveWindowPresets();
-            MainFrameSerializer.serialize(MainApplicationFrame.this);
+            MainFrameSerializer.serialize(MainWindow.this);
         }
     }
 }

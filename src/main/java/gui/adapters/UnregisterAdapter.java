@@ -1,11 +1,11 @@
-package gui;
+package gui.adapters;
 
 import gui.windows.LogWindow;
 
 import javax.swing.event.InternalFrameAdapter;
 import javax.swing.event.InternalFrameEvent;
 
-import static gui.ClosingPanel.closingPanelLogic;
+import static gui.panels.ClosingPanel.closingPanelLogic;
 
 public class UnregisterAdapter extends InternalFrameAdapter {
     private final LogWindow window;

@@ -1,5 +1,6 @@
 package gui;
 
+import gui.windows.MainWindow;
 import log.Logger;
 
 import javax.swing.*;
@@ -7,9 +8,9 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 
 public class MenuBar {
-    private final MainApplicationFrame frame;
+    private final MainWindow frame;
 
-    public MenuBar(MainApplicationFrame frame){
+    public MenuBar(MainWindow frame){
         this.frame = frame;
     }
 

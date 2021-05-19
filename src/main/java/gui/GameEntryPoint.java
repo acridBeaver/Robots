@@ -1,13 +1,11 @@
 package gui;
 
-import java.awt.Frame;
-import java.io.File;
-import java.io.IOException;
+import gui.windows.MainWindow;
 
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 
-public class RobotsProgram
+public class GameEntryPoint
 {
     public static void main(String[] args) {
       try {
@@ -16,7 +14,7 @@ public class RobotsProgram
         e.printStackTrace();
       }
       SwingUtilities.invokeLater(() -> {
-        MainApplicationFrame frame = new MainApplicationFrame();
+        MainWindow frame = new MainWindow();
         frame.setVisible(true);
       });
     }}

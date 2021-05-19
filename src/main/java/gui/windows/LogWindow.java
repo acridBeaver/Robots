@@ -1,6 +1,6 @@
 package gui.windows;
 
-import gui.UnregisterAdapter;
+import gui.adapters.UnregisterAdapter;
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
 import java.awt.TextArea;

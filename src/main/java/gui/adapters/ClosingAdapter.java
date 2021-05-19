@@ -1,12 +1,9 @@
-package gui;
-
-import log.LogChangeListener;
-import log.LogWindowSource;
+package gui.adapters;
 
 import javax.swing.event.InternalFrameAdapter;
 import javax.swing.event.InternalFrameEvent;
 
-import static gui.ClosingPanel.closingPanelLogic;
+import static gui.panels.ClosingPanel.closingPanelLogic;
 
 public class ClosingAdapter extends InternalFrameAdapter {
     @Override

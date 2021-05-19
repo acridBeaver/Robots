@@ -1,12 +1,11 @@
 package gui.windows;
 
-import engine.Const;
 import engine.ModelMover;
 import engine.factories.GameFieldFactory;
 import engine.factories.GameFieldFromFileFactory;
 import engine.rules.BfsMovementRule;
 import engine.rules.DfsMovementRule;
-import gui.ClosingAdapter;
+import gui.adapters.ClosingAdapter;
 import gui.GameVisualizer;
 import model.GameField;
 import model.Robot;
@@ -14,8 +13,6 @@ import model.Robot;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Point;
-import java.awt.event.ComponentAdapter;
-import java.awt.event.ComponentEvent;
 import java.util.List;
 import javax.swing.JPanel;
 import javax.swing.event.InternalFrameAdapter;
