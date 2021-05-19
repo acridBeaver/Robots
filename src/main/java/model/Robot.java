@@ -4,7 +4,7 @@ import engine.rules.MovementRule;
 import java.awt.Point;
 import java.util.concurrent.atomic.AtomicReference;
 
-public class Robot {
+public class Robot implements MovableModel {
     private final AtomicReference<Point> currentPosition;
     private final MovementRule movementRule;
 
@@ -16,17 +16,19 @@ public class Robot {
         direction = Direction.OLD;
     }
 
+    @Override
     public Direction getDirection() {
         return direction;
     }
 
+    @Override
     public Point getCurrentPosition() {
         return currentPosition.get();
     }
 
+    @Override
     public void moveByStep(Point destination) {
         if (destination.equals(currentPosition.get())) {
-            System.out.println("Reached destination!");
             direction = Direction.OLD;
             return;
         }
@@ -36,6 +38,7 @@ public class Robot {
         currentPosition.set(nextPosition);
     }
 
+    @Override
     public void stopMoving() {
         movementRule.resetCurrentPath();
         direction = Direction.OLD;

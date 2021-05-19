@@ -1,5 +1,9 @@
 package model;
 
+import java.awt.*;
+
 public interface MovableModel extends GameModel {
-    void move(double velocity, double angularVelocity, double duration);
+    Direction getDirection();
+    void moveByStep(Point destination);
+    void stopMoving();
 }

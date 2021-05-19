@@ -1,7 +1,7 @@
 package model;
 
+import java.awt.*;
+
 public interface GameModel {
-    double getX();
-    double getY();
-    Direction getDirection();
+    Point getCurrentPosition();
 }
