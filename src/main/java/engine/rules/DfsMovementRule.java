@@ -42,5 +42,6 @@ public class DfsMovementRule extends BaseMovementRule {
   public void resetCurrentPath() {
     System.out.println("Resetting path for DFS search!");
     visited.clear();
+    stack.clear();
   }
 }

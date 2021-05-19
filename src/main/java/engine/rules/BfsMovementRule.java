@@ -42,5 +42,6 @@ public class BfsMovementRule extends BaseMovementRule {
   public void resetCurrentPath() {
     System.out.println("Resetting path for BFS search!");
     visited.clear();
+    queue.clear();
   }
 }
