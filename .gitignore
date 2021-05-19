@@ -14,7 +14,7 @@ eclipse.bat
 *.nar
 hs_err_pid*
 .DS_Store
-*.log
+*.com.robots.log
 tokens
 /src/main/java/storages/google/cache/*
 

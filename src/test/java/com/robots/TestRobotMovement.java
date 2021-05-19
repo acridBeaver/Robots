@@ -1,16 +1,16 @@
 package com.robots;
 
-import engine.factories.GameFieldFactory;
-import engine.factories.SimpleGameFieldFactory;
-import engine.rules.BfsMovementRule;
-import engine.rules.DfsMovementRule;
-import engine.rules.MovementRule;
+import com.robots.engine.factories.GameFieldFactory;
+import com.robots.engine.factories.SimpleGameFieldFactory;
+import com.robots.engine.rules.BfsMovementRule;
+import com.robots.engine.rules.DfsMovementRule;
+import com.robots.engine.rules.MovementRule;
 
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
-import model.GameField;
-import model.Robot;
+import com.robots.models.GameField;
+import com.robots.models.Robot;
 import org.junit.Assert;
 import org.junit.Test;
 
