@@ -5,7 +5,8 @@ import engine.factories.SimpleGameFieldFactory;
 import engine.rules.BfsMovementRule;
 import engine.rules.DfsMovementRule;
 import engine.rules.MovementRule;
-import java.awt.Point;
+
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 import model.GameField;
@@ -28,7 +29,7 @@ public class TestRobotMovement {
     GameFieldFactory gameFieldFactory = new SimpleGameFieldFactory(TEST_MAZE_1, start, end);
     GameField testField = gameFieldFactory.create();
     MovementRule testRule = new BfsMovementRule(testField);
-    Robot testRobot = new Robot(start, testRule);
+    Robot testRobot = new Robot(start, testRule, 1);
     List<Point> actualRoute = new ArrayList<>();
     for (var i = 0; i < 10; i++) {
       System.out.printf("%s%n", testRobot);
@@ -50,7 +51,7 @@ public class TestRobotMovement {
     GameFieldFactory gameFieldFactory = new SimpleGameFieldFactory(TEST_MAZE_1, start, end);
     GameField testField = gameFieldFactory.create();
     MovementRule testRule = new DfsMovementRule(testField);
-    Robot testRobot = new Robot(start, testRule);
+    Robot testRobot = new Robot(start, testRule, 1);
     List<Point> actualRoute = new ArrayList<>();
     for (var i = 0; i < 10; i++) {
       System.out.printf("%s%n", testRobot);

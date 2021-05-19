@@ -1,19 +1,24 @@
 package model;
 
 import engine.rules.MovementRule;
-import java.awt.Point;
+
+import java.awt.*;
+import java.util.ArrayList;
 import java.util.concurrent.atomic.AtomicReference;
 
 public class Robot implements MovableModel {
     private final AtomicReference<Point> currentPosition;
     private final MovementRule movementRule;
+    public final int id;
+    public final ArrayList<Point> way = new ArrayList<Point>();
 
     private volatile Direction direction;
 
-    public Robot(Point initialPosition, MovementRule movementRule) {
+    public Robot(Point initialPosition, MovementRule movementRule,int id) {
         currentPosition = new AtomicReference<>(initialPosition);
         this.movementRule = movementRule;
         direction = Direction.OLD;
+        this.id = id;
     }
 
     @Override
@@ -34,6 +39,7 @@ public class Robot implements MovableModel {
         }
 
         Point nextPosition = movementRule.getNextPosition(currentPosition.get());
+        way.add(nextPosition);
         direction = getNewDirection(nextPosition);
         currentPosition.set(nextPosition);
     }
@@ -42,6 +48,7 @@ public class Robot implements MovableModel {
     public void stopMoving() {
         movementRule.resetCurrentPath();
         direction = Direction.OLD;
+        way.clear();
     }
 
     private Direction getNewDirection(Point newPosition) {

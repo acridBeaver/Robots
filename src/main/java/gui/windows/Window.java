@@ -7,7 +7,7 @@ import gui.model.WindowPreset;
 
 public abstract class Window extends JInternalFrame {
     public Window(String name){
-        super(name, true, true, true, true);
+        super(name, false, true, false, true);
     }
 
     public abstract void changeAdapter(InternalFrameAdapter adapter);

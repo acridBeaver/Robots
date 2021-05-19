@@ -10,9 +10,7 @@ import gui.GameVisualizer;
 import model.GameField;
 import model.Robot;
 
-import java.awt.BorderLayout;
-import java.awt.Dimension;
-import java.awt.Point;
+import java.awt.*;
 import java.util.List;
 import javax.swing.JPanel;
 import javax.swing.event.InternalFrameAdapter;
@@ -22,20 +20,20 @@ public class GameWindow extends Window
     private final GameVisualizer m_visualizer;
 
     private static final Dimension DEFAULT_SIZE = new Dimension(400, 400);
-    private static final Point DEFAULT_LOCATION = new Point(50, 50);
+    private static final Point DEFAULT_LOCATION = new Point(200, 200);
 
     public GameWindow(String name)
     {
         super(name);
-        this.setSize(DEFAULT_SIZE);
         this.setLocation(DEFAULT_LOCATION);
         setMinimumSize(new Dimension(200, 200));
         addInternalFrameListener(new ClosingAdapter());
 
         GameFieldFactory factory = new GameFieldFromFileFactory("maze.txt");
         GameField gameField = factory.create();
-        Robot robotBfs = new Robot(gameField.getMazeStart(), new BfsMovementRule(gameField));
-        Robot robotDfs = new Robot(gameField.getMazeStart(), new DfsMovementRule(gameField));
+        this.setSize(new Dimension(gameField.getWidth() * 50 + 10, gameField.getHeight() * 50 + 30));
+        Robot robotBfs = new Robot(gameField.getMazeStart(), new BfsMovementRule(gameField), 1);
+        Robot robotDfs = new Robot(gameField.getMazeStart(), new DfsMovementRule(gameField), 2);
         ModelMover mover = new ModelMover(gameField);
         mover.registerModel(robotBfs);
         mover.registerModel(robotDfs);
